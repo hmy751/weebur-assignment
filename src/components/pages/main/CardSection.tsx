@@ -13,7 +13,7 @@ export default function CardSection() {
   const searchParams = useSearchParams();
 
   const search = searchParams.get("search");
-  const queryParam = `limit=20`;
+  const queryParam = `limit=20&sortBy=title&order=desc`;
 
   const { data, isLoading } = useQuery({
     queryKey: ["products", search],
