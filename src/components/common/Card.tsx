@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Image from "next/image";
 import { Review } from "@/libs/type";
 import clsx from "clsx";
@@ -11,7 +12,7 @@ type CardProps = {
   reviews: Review[];
 };
 
-export default function Card({
+export default memo(function Card({
   type,
   title,
   description,
@@ -41,7 +42,7 @@ export default function Card({
       )}
     </>
   );
-}
+});
 
 const CardImageBoxStyle = "relative overflow-hidden";
 const CardImageHoverStyle = "hover:scale-105 transition-all duration-300";
