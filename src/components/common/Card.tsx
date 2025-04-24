@@ -71,6 +71,8 @@ function GridCard({
           alt="card"
           width={0}
           height={0}
+          sizes="150px"
+          style={{ width: "100%", height: "auto" }}
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -108,6 +110,7 @@ function ListCard({
           alt="card"
           width={0}
           height={0}
+          sizes="150px"
         />
       </div>
       <div className="flex flex-col gap-2 justify-center">
