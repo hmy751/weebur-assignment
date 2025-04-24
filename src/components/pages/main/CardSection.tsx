@@ -6,10 +6,10 @@ import fetcher from "@/apis/fetcher";
 import Card from "@/components/common/Card";
 import CardList from "@/components/common/CardList";
 import { ProductResponse } from "@/libs/type";
-import { getViewType } from "@/libs/utils";
+import { useGetViewType } from "@/hooks/useGetViewType";
 
 export default function CardSection() {
-  const viewType = getViewType();
+  const viewType = useGetViewType();
   const searchParams = useSearchParams();
 
   const search = searchParams.get("search");

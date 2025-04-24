@@ -1,3 +1,7 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
 type ViewTypeData = {
   viewType: "grid" | "list";
   timestamp: number;
@@ -11,7 +15,7 @@ const isExpired = (timestamp: number) => {
   return timestamp < Date.now() - 1000 * 60 * 60 * 24;
 };
 
-export const getViewType = (): "grid" | "list" => {
+const getViewType = (): "grid" | "list" => {
   const viewTypeData = localStorage.getItem("viewType");
 
   if (!viewTypeData) {
@@ -23,7 +27,6 @@ export const getViewType = (): "grid" | "list" => {
         timestamp: Date.now(),
       })
     );
-
     return newViewType;
   }
 
@@ -39,9 +42,19 @@ export const getViewType = (): "grid" | "list" => {
         timestamp: Date.now(),
       })
     );
-
     return newViewType;
   }
+
+  return viewType;
+};
+
+export const useGetViewType = () => {
+  const [viewType, setViewType] = useState<"grid" | "list">("grid");
+
+  useEffect(() => {
+    const initialViewType = getViewType();
+    setViewType(initialViewType);
+  }, []);
 
   return viewType;
 };
