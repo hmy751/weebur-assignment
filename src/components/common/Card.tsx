@@ -74,8 +74,8 @@ function GridCard({
         />
       </div>
       <div className="flex flex-col gap-2">
-        <div className="text-lg font-bold">{title}</div>
-        <div className="text-sm text-gray-500">{description}</div>
+        <div className="text-lg font-bold line-clamp-1">{title}</div>
+        <div className="text-sm text-gray-500 line-clamp-2">{description}</div>
         <div className="flex items-center gap-2"></div>
         <div className="text-sm text-gray-500">평점 {rating}</div>
         <div className="text-sm text-gray-500">후기 {reviews?.length}개</div>
