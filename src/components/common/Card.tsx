@@ -43,7 +43,9 @@ export default function Card({
   );
 }
 
-const CardHoverStyle = "hover:scale-105 transition-all duration-300";
+const CardImageBoxStyle = "relative overflow-hidden";
+const CardImageHoverStyle = "hover:scale-105 transition-all duration-300";
+const CardImageShadowStyle = "shadow-md";
 
 type GridCardProps = Omit<CardProps, "type">;
 
@@ -56,9 +58,15 @@ function GridCard({
 }: GridCardProps) {
   return (
     <div className="w-full h-full cursor-pointer">
-      <div className={clsx("w-full relative aspect-square", CardHoverStyle)}>
+      <div
+        className={clsx(
+          "w-full aspect-square",
+          CardImageBoxStyle,
+          CardImageShadowStyle
+        )}
+      >
         <Image
-          className="w-full h-full"
+          className={clsx("w-full h-full", CardImageHoverStyle)}
           src={thumbnail}
           alt="card"
           width={0}
@@ -86,14 +94,21 @@ function ListCard({
   reviews,
 }: ListCardProps) {
   return (
-    <div className="flex flex-row gap-2 cursor-pointer">
+    <div className="flex flex-row gap-lg cursor-pointer">
       <div
         className={clsx(
-          "w-100 h-100 relative min-w-100 min-h-100",
-          CardHoverStyle
+          "w-100 h-100 min-w-100 min-h-100",
+          CardImageBoxStyle,
+          CardImageShadowStyle
         )}
       >
-        <Image src={thumbnail} alt="card" width={0} height={0} fill />
+        <Image
+          src={thumbnail}
+          className={clsx("w-full h-full", CardImageHoverStyle)}
+          alt="card"
+          width={0}
+          height={0}
+        />
       </div>
       <div className="flex flex-col gap-2 justify-center">
         <div className="text-lg font-bold">{title}</div>
