@@ -46,3 +46,33 @@ const GridCardListComponent = () => {
 export const Primary = {
   render: () => <GridCardListComponent />,
 };
+
+const ListCardListComponent = () => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["products"],
+    queryFn: () => fetcher.get<{ products: ProductResponse[] }>("products"),
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (!data) return null;
+
+  return (
+    <CardList type="list">
+      {data.products.map((product) => (
+        <Card
+          key={product.id}
+          type="list"
+          title={product.title}
+          description={product.description}
+          thumbnail={product.thumbnail}
+          rating={product.rating}
+          reviews={product.reviews}
+        />
+      ))}
+    </CardList>
+  );
+};
+
+export const List = {
+  render: () => <ListCardListComponent />,
+};

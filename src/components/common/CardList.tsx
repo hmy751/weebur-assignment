@@ -10,6 +10,7 @@ export default function CardList({ type, cols = 1, children }: CardListProps) {
   return (
     <>
       {type === "grid" && <GridCardList cols={cols}>{children}</GridCardList>}
+      {type === "list" && <ListCardList>{children}</ListCardList>}
     </>
   );
 }
@@ -26,5 +27,13 @@ const GridCardList = ({ cols, children }: GridCardListProps) => {
     >
       {children}
     </div>
+  );
+};
+
+type ListCardListProps = Omit<CardListProps, "type">;
+
+const ListCardList = ({ children }: ListCardListProps) => {
+  return (
+    <div className={clsx(`flex flex-col gap-lg`, "w-full")}>{children}</div>
   );
 };
