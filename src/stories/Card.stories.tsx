@@ -49,3 +49,30 @@ export const GridType = {
   },
   render: () => <GridTypeStoryComponent />,
 };
+
+const ListTypeStoryComponent = () => {
+  const { data } = useQuery({
+    queryKey: ["products"],
+    queryFn: () => fetcher.get<{ products: ProductResponse[] }>("products"),
+  });
+
+  if (!data) return null;
+
+  return (
+    <Card
+      type="list"
+      title={data?.products[0].title}
+      description={data?.products[0].description}
+      thumbnail={data?.products[0].thumbnail}
+      rating={data?.products[0].rating}
+      reviews={data?.products[0].reviews}
+    />
+  );
+};
+
+export const ListType = {
+  parameters: {
+    layout: "centered",
+  },
+  render: () => <ListTypeStoryComponent />,
+};
