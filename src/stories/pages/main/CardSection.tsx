@@ -4,9 +4,12 @@ import fetcher from "@/apis/fetcher";
 import Card from "@/components/common/Card";
 import CardList from "@/components/common/CardList";
 import { ProductResponse } from "@/libs/type";
+import { getViewType } from "@/libs/utils";
 import { useQuery } from "@tanstack/react-query";
 
 export default function CardSection() {
+  const viewType = getViewType();
+
   const { data, isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
@@ -19,11 +22,11 @@ export default function CardSection() {
 
   return (
     <section className="flex flex-col gap-4">
-      <CardList type="grid" cols={4}>
+      <CardList type={viewType} cols={4}>
         {data.products.map((product) => (
           <Card
             key={product.id}
-            type="grid"
+            type={viewType}
             title={product.title}
             description={product.description}
             thumbnail={product.thumbnail}
