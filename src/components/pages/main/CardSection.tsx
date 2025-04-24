@@ -1,19 +1,33 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import fetcher from "@/apis/fetcher";
 import Card from "@/components/common/Card";
 import CardList from "@/components/common/CardList";
 import { ProductResponse } from "@/libs/type";
 import { getViewType } from "@/libs/utils";
-import { useQuery } from "@tanstack/react-query";
 
 export default function CardSection() {
   const viewType = getViewType();
+  const searchParams = useSearchParams();
+
+  const search = searchParams.get("search");
+  const queryParam = `limit=20`;
 
   const { data, isLoading } = useQuery({
-    queryKey: ["products"],
-    queryFn: () =>
-      fetcher.get<{ products: ProductResponse[] }>("products?limit=20"),
+    queryKey: ["products", search],
+    queryFn: async () => {
+      if (search) {
+        return fetcher.get<{ products: ProductResponse[] }>(
+          `products/search?q=${encodeURIComponent(search)}&${queryParam}`
+        );
+      }
+
+      return fetcher.get<{ products: ProductResponse[] }>(
+        `products?${queryParam}`
+      );
+    },
   });
 
   if (isLoading) return <div>데이터를 불러오는 중입니다...</div>;
