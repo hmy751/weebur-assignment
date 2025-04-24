@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "@/styles/global/css";
-import QueryProvider from "@/components/common/provider/QueryProvider";
+
+import QueryProvider from "@/components/layout/QueryProvider";
 
 const notoSansKR = Noto_Sans_KR({
   weight: ["400", "700"],
