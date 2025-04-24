@@ -3,7 +3,7 @@ export type Product = {
   title: string;
   description: string;
   thumbnail: string;
-  rating: number[];
+  rating: number;
   reviews: Review[];
 };
 
