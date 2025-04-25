@@ -8,10 +8,10 @@ import fetcher from "@/apis/fetcher";
 import Card from "@/components/common/Card";
 import CardList from "@/components/common/CardList";
 import { ProductResponse } from "@/libs/type";
-import { useGetViewType } from "@/hooks/useGetViewType";
+import { useViewTypeStore } from "@/store/useViewTypeStore";
 
 function CardSectionWithData() {
-  const viewType = useGetViewType();
+  const { viewType } = useViewTypeStore();
 
   const searchParams = useSearchParams();
   const search = searchParams.get("search") || "";
@@ -75,12 +75,12 @@ function CardSectionWithData() {
 
   return (
     <>
-      <CardList type={viewType} cols={4}>
+      <CardList type={viewType ?? "grid"} cols={4}>
         {products.map((product) => (
           <Card
             key={product.id}
             id={product.id}
-            type={viewType}
+            type={viewType ?? "grid"}
             title={product.title}
             description={product.description}
             thumbnail={product.thumbnail}
