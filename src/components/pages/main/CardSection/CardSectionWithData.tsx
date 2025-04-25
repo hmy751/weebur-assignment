@@ -1,48 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
-
 import Card from "@/components/common/Card";
 import CardList from "@/components/common/CardList";
 import { useViewTypeStore } from "@/store/useViewTypeStore";
 import { useGetInfiniteProduct } from "@/data/useGetInfiniteProduct";
+import { useInfiniteScrollObserver } from "@/hooks/useInfiniteScrollObserver";
 
 function CardSectionWithData() {
   const { viewType } = useViewTypeStore();
 
-  const observerRef = useRef<IntersectionObserver | null>(null);
-  const loadMoreRef = useRef<HTMLDivElement | null>(null);
-
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useGetInfiniteProduct();
+  const { loadMoreRef } = useInfiniteScrollObserver({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  });
 
   const products = data?.pages.flatMap((page) => page) || [];
-
-  const handleObserver = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      const target = entries[0];
-      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
-      }
-    },
-    [hasNextPage, isFetchingNextPage, fetchNextPage]
-  );
-
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(handleObserver, {
-      threshold: 0.1,
-    });
-
-    if (loadMoreRef.current) {
-      observerRef.current.observe(loadMoreRef.current);
-    }
-
-    return () => {
-      if (loadMoreRef.current) {
-        observerRef.current?.unobserve(loadMoreRef.current);
-      }
-    };
-  }, [handleObserver]);
 
   if (products.length === 0 && !hasNextPage)
     return <div>데이터가 없습니다.</div>;
