@@ -10,7 +10,7 @@ import CardList from "@/components/common/CardList";
 import { ProductResponse } from "@/libs/type";
 import { useGetViewType } from "@/hooks/useGetViewType";
 
-export default function CardSection() {
+function CardSectionWithData() {
   const viewType = useGetViewType();
 
   const searchParams = useSearchParams();
@@ -113,3 +113,16 @@ export default function CardSection() {
     </>
   );
 }
+
+const Loading = ({ type }: { type: "grid" | "list" }) => {
+  return (
+    <>
+      {type === "grid" && <CardList.Skeleton type="grid" cols={4} />}
+      {type === "list" && <CardList.Skeleton type="list" />}
+    </>
+  );
+};
+
+CardSectionWithData.Loading = Loading;
+
+export default CardSectionWithData;
