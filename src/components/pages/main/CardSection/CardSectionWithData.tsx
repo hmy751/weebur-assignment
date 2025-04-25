@@ -63,6 +63,14 @@ function CardSectionWithData() {
   );
 }
 
+const Error = ({ message }: { message: string }) => {
+  return (
+    <div className="flex justify-center items-center w-full h-200">
+      {message}
+    </div>
+  );
+};
+
 const Loading = ({ type }: { type: "grid" | "list" }) => {
   return (
     <>
@@ -72,6 +80,7 @@ const Loading = ({ type }: { type: "grid" | "list" }) => {
   );
 };
 
+CardSectionWithData.Error = Error;
 CardSectionWithData.Loading = Loading;
 
 export default CardSectionWithData;
