@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import CardList from "@/components/common/CardList";
 import fetcher from "@/apis/fetcher";
 import { ProductResponse } from "@/libs/type";
-import Card, { CardSkeleton } from "@/components/common/Card";
+import Card from "@/components/common/Card";
 
 const meta = {
   title: "Common/CardList",
@@ -81,48 +81,12 @@ export const ListType = {
 
 export const GridTypeSkeleton = {
   render: () => {
-    return (
-      <CardList type="grid" cols={4}>
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-        <CardSkeleton type="grid" />
-      </CardList>
-    );
+    return <CardList.Skeleton type="grid" cols={4} />;
   },
 };
 
 export const ListTypeSkeleton = {
   render: () => {
-    return (
-      <CardList type="list">
-        <CardSkeleton type="list" />
-        <CardSkeleton type="list" />
-        <CardSkeleton type="list" />
-        <CardSkeleton type="list" />
-        <CardSkeleton type="list" />
-        <CardSkeleton type="list" />
-        <CardSkeleton type="list" />
-        <CardSkeleton type="list" />
-        <CardSkeleton type="list" />
-        <CardSkeleton type="list" />
-      </CardList>
-    );
+    return <CardList.Skeleton type="list" />;
   },
 };
