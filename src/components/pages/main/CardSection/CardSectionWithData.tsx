@@ -1,46 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
-import { useSearchParams } from "next/navigation";
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
-import fetcher from "@/apis/fetcher";
 import Card from "@/components/common/Card";
 import CardList from "@/components/common/CardList";
-import { ProductResponse } from "@/libs/type";
 import { useViewTypeStore } from "@/store/useViewTypeStore";
+import { useGetInfiniteProduct } from "@/data/useGetInfiniteProduct";
 
 function CardSectionWithData() {
   const { viewType } = useViewTypeStore();
-
-  const searchParams = useSearchParams();
-  const search = searchParams.get("search") || "";
-  const queryParam = `limit=20&sortBy=rating&order=desc`;
 
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useSuspenseInfiniteQuery({
-      queryKey: ["products", search],
-      queryFn: async ({ pageParam }) => {
-        const pageParamIndex = pageParam - 1;
+    useGetInfiniteProduct();
 
-        const response = await fetcher.get<{ products: ProductResponse[] }>(
-          search
-            ? `products/search?q=${encodeURIComponent(
-                search
-              )}&${queryParam}&skip=${pageParamIndex * 20}`
-            : `products?${queryParam}&skip=${pageParamIndex * 20}`
-        );
-
-        return response.products;
-      },
-      getNextPageParam: (lastPage, allPages) => {
-        return lastPage.length === 20 ? allPages.length + 1 : undefined;
-      },
-      initialPageParam: 1,
-    });
+  const products = data?.pages.flatMap((page) => page) || [];
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -67,8 +43,6 @@ function CardSectionWithData() {
       }
     };
   }, [handleObserver]);
-
-  const products = data?.pages.flatMap((page) => page) || [];
 
   if (products.length === 0 && !hasNextPage)
     return <div>데이터가 없습니다.</div>;
