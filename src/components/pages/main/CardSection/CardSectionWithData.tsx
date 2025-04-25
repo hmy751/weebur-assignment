@@ -5,9 +5,12 @@ import CardList from "@/components/common/CardList";
 import { useViewTypeStore } from "@/store/useViewTypeStore";
 import { useGetInfiniteProduct } from "@/data/useGetInfiniteProduct";
 import { useInfiniteScrollObserver } from "@/hooks/useInfiniteScrollObserver";
+import { useSearchParams } from "next/navigation";
 
 function CardSectionWithData() {
   const { viewType } = useViewTypeStore();
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search") || "";
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useGetInfiniteProduct();
@@ -20,7 +23,15 @@ function CardSectionWithData() {
   const products = data?.pages.flatMap((page) => page) || [];
 
   if (products.length === 0 && !hasNextPage)
-    return <div>데이터가 없습니다.</div>;
+    return (
+      <Error
+        message={
+          search
+            ? `'${search}' 에 대한 상품이 없습니다.`
+            : "존재하는 상품이 없습니다."
+        }
+      />
+    );
 
   return (
     <>
