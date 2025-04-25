@@ -4,6 +4,7 @@ import { Review } from "@/libs/type";
 import clsx from "clsx";
 
 type CardProps = {
+  id: number;
   type: "grid" | "list";
   title: string;
   description: string;
@@ -12,7 +13,7 @@ type CardProps = {
   reviews: Review[];
 };
 
-export default memo(function Card({
+function Card({
   type,
   title,
   description,
@@ -42,13 +43,29 @@ export default memo(function Card({
       )}
     </>
   );
+}
+
+export default memo(Card, (prev, next) => {
+  if (prev.id !== next.id) {
+    return false;
+  }
+
+  if (prev.type !== next.type) {
+    return false;
+  }
+
+  if (prev.title !== next.title) {
+    return false;
+  }
+
+  return true;
 });
 
 const CardImageBoxStyle = "relative overflow-hidden";
 const CardImageHoverStyle = "hover:scale-105 transition-all duration-300";
 const CardImageShadowStyle = "shadow-md";
 
-type GridCardProps = Omit<CardProps, "type">;
+type GridCardProps = Omit<CardProps, "type" | "id">;
 
 function GridCard({
   title,
@@ -87,7 +104,7 @@ function GridCard({
   );
 }
 
-type ListCardProps = Omit<CardProps, "type">;
+type ListCardProps = Omit<CardProps, "type" | "id">;
 
 function ListCard({
   title,

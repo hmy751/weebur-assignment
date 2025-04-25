@@ -31,6 +31,7 @@ const GridCardListComponent = () => {
       {data.products.map((product) => (
         <Card
           key={product.id}
+          id={product.id}
           type="grid"
           title={product.title}
           description={product.description}
@@ -61,6 +62,7 @@ const ListCardListComponent = () => {
       {data.products.map((product) => (
         <Card
           key={product.id}
+          id={product.id}
           type="list"
           title={product.title}
           description={product.description}

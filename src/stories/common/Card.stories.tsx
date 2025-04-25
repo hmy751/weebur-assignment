@@ -33,6 +33,7 @@ const GridTypeStoryComponent = () => {
 
   return (
     <Card
+      id={data?.products[0].id}
       type="grid"
       title={data?.products[0].title}
       description={data?.products[0].description}
@@ -60,6 +61,7 @@ const ListTypeStoryComponent = () => {
 
   return (
     <Card
+      id={data?.products[0].id}
       type="list"
       title={data?.products[0].title}
       description={data?.products[0].description}
