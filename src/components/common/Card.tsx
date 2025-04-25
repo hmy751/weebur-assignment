@@ -45,6 +45,65 @@ function Card({
   );
 }
 
+const CardSkeletonStyle = "bg-gray-200 rounded-md animate-pulse";
+
+const CardImageBoxStyle = "relative overflow-hidden";
+const CardImageHoverStyle = "hover:scale-105 transition-all duration-300";
+const CardImageShadowStyle = "shadow-md";
+
+export const CardSkeleton = ({ type }: { type: "grid" | "list" }) => {
+  return (
+    <>
+      {type === "grid" && <GridTypeSkeleton />}
+      {type === "list" && <ListTypeSkeleton />}
+    </>
+  );
+};
+
+export const ListTypeSkeleton = () => {
+  return (
+    <div className="flex flex-row gap-lg cursor-pointer">
+      <div
+        className={clsx(
+          "w-100 h-100 min-w-100 min-h-100",
+          CardImageBoxStyle,
+          CardSkeletonStyle
+        )}
+      >
+        <div className={clsx("w-full h-full")} />
+      </div>
+      <div className="flex flex-1 flex-col gap-2 justify-center">
+        <div className={clsx(["w-1/2 h-md", CardSkeletonStyle])}></div>
+        <div className={clsx(["w-full h-lg", CardSkeletonStyle])}></div>
+        <div className={clsx(["w-20 h-md", CardSkeletonStyle])}></div>
+        <div className={clsx(["w-20 h-md", CardSkeletonStyle])}></div>
+      </div>
+    </div>
+  );
+};
+
+export const GridTypeSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-2 w-full h-full cursor-pointer">
+      <div
+        className={clsx(
+          "w-full aspect-square",
+          CardImageBoxStyle,
+          CardSkeletonStyle
+        )}
+      >
+        <div className={clsx("w-full h-full")} />
+      </div>
+      <div className="flex flex-col gap-2">
+        <div className={clsx(["w-1/2 h-md", CardSkeletonStyle])}></div>
+        <div className={clsx(["w-full h-lg", CardSkeletonStyle])}></div>
+        <div className={clsx(["w-20 h-md", CardSkeletonStyle])}></div>
+        <div className={clsx(["w-20 h-md", CardSkeletonStyle])}></div>
+      </div>
+    </div>
+  );
+};
+
 export default memo(Card, (prev, next) => {
   if (prev.id !== next.id) {
     return false;
@@ -60,10 +119,6 @@ export default memo(Card, (prev, next) => {
 
   return true;
 });
-
-const CardImageBoxStyle = "relative overflow-hidden";
-const CardImageHoverStyle = "hover:scale-105 transition-all duration-300";
-const CardImageShadowStyle = "shadow-md";
 
 type GridCardProps = Omit<CardProps, "type" | "id">;
 
@@ -131,7 +186,7 @@ function ListCard({
           sizes="150px"
         />
       </div>
-      <div className="flex flex-col gap-2 justify-center">
+      <div className="flex flex-1 flex-col gap-2 justify-center">
         <div className="text-lg font-bold">{title}</div>
         <div className="text-sm text-gray-500">{description}</div>
         <div className="text-sm text-gray-500">평점 {rating}</div>

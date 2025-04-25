@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react";
 
-import Card from "@/components/common/Card";
+import Card, { CardSkeleton } from "@/components/common/Card";
 import { ProductResponse } from "@/libs/type";
 import fetcher from "@/apis/fetcher";
 import { useQuery } from "@tanstack/react-query";
@@ -77,4 +77,12 @@ export const ListType = {
     layout: "centered",
   },
   render: () => <ListTypeStoryComponent />,
+};
+
+export const GridTypeSkeleton = {
+  render: () => <CardSkeleton type="grid" />,
+};
+
+export const ListTypeSkeleton = {
+  render: () => <CardSkeleton type="list" />,
 };
