@@ -44,7 +44,7 @@ const GridCardListComponent = () => {
   );
 };
 
-export const Primary = {
+export const GridType = {
   render: () => <GridCardListComponent />,
 };
 
@@ -75,6 +75,6 @@ const ListCardListComponent = () => {
   );
 };
 
-export const List = {
+export const ListType = {
   render: () => <ListCardListComponent />,
 };
