@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 import fetcher from "@/apis/fetcher";
 import Card from "@/components/common/Card";
@@ -20,8 +20,8 @@ export default function CardSection() {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-  const { data, fetchNextPage, isLoading, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useSuspenseInfiniteQuery({
       queryKey: ["products", search],
       queryFn: async ({ pageParam }) => {
         const pageParamIndex = pageParam - 1;
@@ -70,28 +70,24 @@ export default function CardSection() {
 
   const products = data?.pages.flatMap((page) => page) || [];
 
-  if (isLoading) return <div>데이터를 불러오는 중입니다...</div>;
-
   if (products.length === 0 && !hasNextPage)
     return <div>데이터가 없습니다.</div>;
 
   return (
     <>
-      <section>
-        <CardList type={viewType} cols={4}>
-          {products.map((product) => (
-            <Card
-              key={product.id}
-              type={viewType}
-              title={product.title}
-              description={product.description}
-              thumbnail={product.thumbnail}
-              rating={product.rating}
-              reviews={product.reviews}
-            />
-          ))}
-        </CardList>
-      </section>
+      <CardList type={viewType} cols={4}>
+        {products.map((product) => (
+          <Card
+            key={product.id}
+            type={viewType}
+            title={product.title}
+            description={product.description}
+            thumbnail={product.thumbnail}
+            rating={product.rating}
+            reviews={product.reviews}
+          />
+        ))}
+      </CardList>
       <div ref={loadMoreRef} className="h-10">
         {isFetchingNextPage && (
           <div className="flex justify-center items-center py-4">

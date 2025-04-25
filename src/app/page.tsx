@@ -1,4 +1,4 @@
-import CardSection from "@/components/pages/main/CardSection";
+import CardSection from "@/components/pages/main/CardSection/CardSection";
 import SearchSection from "@/components/pages/main/SearchSection";
 
 export default function Page() {
